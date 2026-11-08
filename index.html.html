@@ -1,0 +1,1083 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>الامتحان الشامل - مادة البرمجة والذكاء الاصطناعي (100 سؤال)</title>
+  <style>
+    :root {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #172033;
+      background: #f4f7fb;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7fb; }
+    .wrap { max-width: 950px; margin: auto; padding: 20px; }
+    .hero {
+      background: linear-gradient(135deg, #182848, #4b6cb7);
+      color: white;
+      padding: 28px;
+      border-radius: 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    .hero h1 { margin: 0 0 8px; font-size: 26px; }
+    .hero p { margin: 4px 0; opacity: 0.92; font-size: 15px; }
+    .timer {
+      position: sticky;
+      top: 8px;
+      z-index: 10;
+      background: #fff;
+      border: 2px solid #d8deea;
+      border-radius: 14px;
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+    .time { font-size: 24px; font-weight: 800; color: #b42318; font-family: monospace; }
+    .card {
+      background: #fff;
+      border: 1px solid #e1e6ef;
+      border-radius: 16px;
+      padding: 18px;
+      margin: 14px 0;
+      transition: all 0.2s ease;
+    }
+    .q { font-weight: 700; line-height: 1.7; margin-bottom: 12px; font-size: 16px; }
+    .opt {
+      display: block;
+      padding: 10px 14px;
+      border: 1px solid #e4e8ef;
+      border-radius: 10px;
+      margin: 7px 0;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    .opt:hover { background: #f7f9fc; }
+    input[type="text"], textarea {
+      font: inherit;
+      width: 100%;
+      padding: 11px;
+      border: 1px solid #ccd4e0;
+      border-radius: 10px;
+      background: #fff;
+    }
+    textarea {
+      min-height: 90px;
+      direction: rtl;
+      text-align: right;
+      font-size: 15px;
+    }
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 14px 22px;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+      background: #315efb;
+      color: #fff;
+      width: 100%;
+    }
+    button:hover { background: #2349d4; }
+    .submit { margin: 20px 0 40px; }
+    .result {
+      background: #fff;
+      border: 2px solid #315efb;
+      border-radius: 18px;
+      padding: 25px;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .score { font-size: 42px; font-weight: 900; color: #182848; }
+    .correct { border-color: #22a06b !important; background: #f0fff8 !important; }
+    .wrong { border-color: #d92d20 !important; background: #fff4f2 !important; }
+    .feedback { margin-top: 9px; font-size: 14px; line-height: 1.6; font-weight: bold; }
+    .feedback.ok { color: #157f54; }
+    .feedback.err { color: #b42318; }
+    .hidden { display: none; }
+    .section {
+      font-size: 19px;
+      font-weight: 800;
+      margin: 28px 0 12px;
+      color: #182848;
+      border-right: 4px solid #315efb;
+      padding-right: 10px;
+    }
+    code {
+      direction: ltr;
+      display: inline-block;
+      font-family: Consolas, monospace;
+      background: #f0f3f8;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #0b4b88;
+    }
+  </style>
+</head>
+<body>
+<main class="wrap" id="exam">
+  <div class="hero">
+    <h1>الامتحان الشامل — مادة البرمجة والذكاء الاصطناعي</h1>
+    <p>تغطية شاملة حتى الوحدة الرابعة الدرس الثاني (أساسيات لغة بايثون، الذكاء الاصطناعي والأمن الرقمي)</p>
+    <p>الزمن: 60 دقيقة (ساعة واحدة) | إجمالي الأسئلة: 100 سؤال (80 اختيار من متعدد + 20 سؤال مقالي ومقارنات)</p>
+  </div>
+
+  <div class="timer">
+    <b>⏱️ الوقت المتبقي:</b>
+    <span class="time" id="timer">60:00</span>
+  </div>
+
+  <form id="examForm" onsubmit="return false">
+    <!-- بيانات الطالب -->
+    <div class="card">
+      <div class="q">اسم الطالب الرباعي (Student Full Name):</div>
+      <input type="text" id="studentName" placeholder="اكتب اسمك الثلاثي أو الرباعي هنا..." required>
+    </div>
+
+    <!-- القسم الأول: أسئلة الاختيار من متعدد -->
+    <div class="section">القسم الأول: أسئلة الاختيار من متعدد (80 سؤالاً)</div>
+
+    <!-- أسئلة الاختيارات الـ 80 -->
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) محاكاة القدرات الذهنية البشرية والتفكير وحل المشكلات">
+      <div class="q">1. ما هو الهدف الأساسي لمجال الذكاء الاصطناعي (AI)؟</div>
+      <label class="opt"><input type="radio" name="q1" value="0"> أ) محاكاة القدرات الذهنية البشرية والتفكير وحل المشكلات</label>
+      <label class="opt"><input type="radio" name="q1" value="1"> ب) التسريع المادي لسرعة المعالج ومكونات الحاسوب</label>
+      <label class="opt"><input type="radio" name="q1" value="2"> ج) إلغاء الحاجة للغات البرمجة واستبدالها بالصوت</label>
+      <label class="opt"><input type="radio" name="q1" value="3"> د) استبدال العنصر البشري بالكامل في جميع المجالات</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) يعتمد على بيانات معنونة (Labeled Data) تحتوي على المخرجات المطلوبة">
+      <div class="q">2. ما الذي يميز 'التعلم الموجه' (Supervised Learning) عن باقي أنواع التعلم؟</div>
+      <label class="opt"><input type="radio" name="q2" value="0"> أ) يعتمد على بيانات معنونة (Labeled Data) تحتوي على المخرجات المطلوبة</label>
+      <label class="opt"><input type="radio" name="q2" value="1"> ب) يعمل دون الحاجة إلى أية بيانات تدريبية مسبقاً</label>
+      <label class="opt"><input type="radio" name="q2" value="2"> ج) يعتمد فقط على نظام المكافآت والعقوبات التكيفي</label>
+      <label class="opt"><input type="radio" name="q2" value="3"> د) يستخلص الأنماط من بيانات غير معنونة تلقائياً</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) تجميع العملاء إلى مجموعات متشابهة بناءً على سلوك الشراء (Clustering)">
+      <div class="q">3. أي مما يلي يُعد مثالاً نموذجياً على 'التعلم غير الموجه' (Unsupervised Learning)؟</div>
+      <label class="opt"><input type="radio" name="q3" value="0"> أ) تجميع العملاء إلى مجموعات متشابهة بناءً على سلوك الشراء (Clustering)</label>
+      <label class="opt"><input type="radio" name="q3" value="1"> ب) التنبؤ بسعر منزل بناءً على مساحته وموقعه وقيم سابقة</label>
+      <label class="opt"><input type="radio" name="q3" value="2"> ج) التعرف على صور القطط المكتوب عليها اسم الحيوان صراحة</label>
+      <label class="opt"><input type="radio" name="q3" value="3"> د) تدريب روبوت على المشي عبر التجربة والخطأ والمكافأة</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) تقسيم النص إلى وحدات أصغر (كلمات أو أجزاء) لسهولة معالجتها">
+      <div class="q">4. ما هي الوظيفة الأساسية لعملية 'الترميز' (Tokenization) في معالجة اللغات الطبيعية؟</div>
+      <label class="opt"><input type="radio" name="q4" value="0"> أ) تقسيم النص إلى وحدات أصغر (كلمات أو أجزاء) لسهولة معالجتها</label>
+      <label class="opt"><input type="radio" name="q4" value="1"> ب) ترجمة النصوص من اللغة العربية إلى الإنجليزية تلقائياً</label>
+      <label class="opt"><input type="radio" name="q4" value="2"> ج) تصحيح الأخطاء الإملائية في النصوص فوراً</label>
+      <label class="opt"><input type="radio" name="q4" value="3"> د) حذف النصوص الطويلة من قاعدة البيانات لحفظ المساحة</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) بيانات مرفق معها الإجابة أو الفئة الصحيحة لتوجيه النموذج">
+      <div class="q">5. ما المقصود بـ 'البيانات المعنونة' (Labeled Data)؟</div>
+      <label class="opt"><input type="radio" name="q5" value="0"> أ) بيانات مرفق معها الإجابة أو الفئة الصحيحة لتوجيه النموذج</label>
+      <label class="opt"><input type="radio" name="q5" value="1"> ب) بيانات سرية مشفرة برقم سري لا يمكن فتحها</label>
+      <label class="opt"><input type="radio" name="q5" value="2"> ج) بيانات تحتوي على أرقام فقط بدون حروف</label>
+      <label class="opt"><input type="radio" name="q5" value="3"> د) بيانات غير منظمة مأخوذة من الإنترنت مباشرة دون مراجعة</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) الشبكات العصبية الاصطناعية (Artificial Neural Networks)">
+      <div class="q">6. أي من الشبكات البرمجية يُحاكي طريقة عمل الخلايا العصبية في المخ البشري؟</div>
+      <label class="opt"><input type="radio" name="q6" value="0"> أ) الشبكات العصبية الاصطناعية (Artificial Neural Networks)</label>
+      <label class="opt"><input type="radio" name="q6" value="1"> ب) شبكات التوصيل السلكية المحاضرة (LAN)</label>
+      <label class="opt"><input type="radio" name="q6" value="2"> ج) شبكات الإنترنت السحابية (Cloud Networks)</label>
+      <label class="opt"><input type="radio" name="q6" value="3"> د) قواعد البيانات العلاقية (SQL)</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) Narrow AI مخصص لمهمة محددة، بينما AGI يملك قدرات تفكير عامة كالبشر">
+      <div class="q">7. ما الفرق بين الذكاء الاصطناعي الضيق (Narrow AI) والذكاء الاصطناعي العام (AGI)؟</div>
+      <label class="opt"><input type="radio" name="q7" value="0"> أ) Narrow AI مخصص لمهمة محددة، بينما AGI يملك قدرات تفكير عامة كالبشر</label>
+      <label class="opt"><input type="radio" name="q7" value="1"> ب) Narrow AI أسرع دائماً في المعالجة من AGI</label>
+      <label class="opt"><input type="radio" name="q7" value="2"> ج) AGI موجود ومستخدم في كافة الهواتف الذكية الحالية</label>
+      <label class="opt"><input type="radio" name="q7" value="3"> د) Narrow AI لا يحتاج إلى بيانات لتدريبه</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) جمع وتجهيز وتنظيف البيانات (Data Cleaning & Preparation)">
+      <div class="q">8. ما هي المرحلة الأكثر استهلاكاً للوقت والأهمية في مشروع الذكاء الاصطناعي؟</div>
+      <label class="opt"><input type="radio" name="q8" value="0"> أ) جمع وتجهيز وتنظيف البيانات (Data Cleaning & Preparation)</label>
+      <label class="opt"><input type="radio" name="q8" value="1"> ب) كتابة اسم ونشاط المشروع</label>
+      <label class="opt"><input type="radio" name="q8" value="2"> ج) شراء جهاز حاسوب حديث</label>
+      <label class="opt"><input type="radio" name="q8" value="3"> د) طباعة التقارير النهائية للمستخدمين</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) رؤية الكمبيوتر (Computer Vision)">
+      <div class="q">9. ما هي التقنية المسؤولة عن تحليل الصور والفيديوهات وتحويلها لبيانات يفهمها النظام؟</div>
+      <label class="opt"><input type="radio" name="q9" value="0"> أ) رؤية الكمبيوتر (Computer Vision)</label>
+      <label class="opt"><input type="radio" name="q9" value="1"> ب) معالجة الصوت الرقمي (Audio Processing)</label>
+      <label class="opt"><input type="radio" name="q9" value="2"> ج) الشبكات اللاسلكية (Wireless Networks)</label>
+      <label class="opt"><input type="radio" name="q9" value="3"> د) ضغط الملفات المتقدم (Data Compression)</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) إنشاء نص أو صورة جديدة تماماً بناءً على أوامر نصية (Prompts)">
+      <div class="q">10. أي من التطبيقات التالية يُعد تطبيقاً مباشراً للذكاء الاصطناعي التوليدي (Generative AI)؟</div>
+      <label class="opt"><input type="radio" name="q10" value="0"> أ) إنشاء نص أو صورة جديدة تماماً بناءً على أوامر نصية (Prompts)</label>
+      <label class="opt"><input type="radio" name="q10" value="1"> ب) حساب المجموع الكلي لأرقام في جدول إلكتروني</label>
+      <label class="opt"><input type="radio" name="q10" value="2"> ج) فتح باب السيارة بضغط زر المفتاح الميكانيكي</label>
+      <label class="opt"><input type="radio" name="q10" value="3"> د) عرض الساعة والتاريخ الحاليين على الشاشة</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) ميل البيانات لترجيح فئة معينة مما يؤدي لنتائج وقرارات غير عادلة">
+      <div class="q">11. ما المقصود بـ 'التحيز في البيانات' (Data Bias)؟</div>
+      <label class="opt"><input type="radio" name="q11" value="0"> أ) ميل البيانات لترجيح فئة معينة مما يؤدي لنتائج وقرارات غير عادلة</label>
+      <label class="opt"><input type="radio" name="q11" value="1"> ب) سرعة استجابة النموذج للبيانات الجديدة</label>
+      <label class="opt"><input type="radio" name="q11" value="2"> ج) زيادة حجم الذاكرة المستخدمة للنموذج</label>
+      <label class="opt"><input type="radio" name="q11" value="3"> د) تشفير البيانات لمنع وصول الغرباء إليها</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) حفظ بيانات التدريب بامتياز ولكن الفشل في التعامل مع بيانات جديدة">
+      <div class="q">12. ما المقصود بـ 'فرط التكيف' (Overfitting) في نماذج الذكاء الاصطناعي؟</div>
+      <label class="opt"><input type="radio" name="q12" value="0"> أ) حفظ بيانات التدريب بامتياز ولكن الفشل في التعامل مع بيانات جديدة</label>
+      <label class="opt"><input type="radio" name="q12" value="1"> ب) بطء الجهاز عند بدء تشغيل البرنامج</label>
+      <label class="opt"><input type="radio" name="q12" value="2"> ج) عدم قدرة النموذج على التعلم مطلقاً من البيانات</label>
+      <label class="opt"><input type="radio" name="q12" value="3"> د) نجاح النموذج في بيانات الاختبار وفشله في التدريب</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) توافر البيانات الضخمة (Big Data) وقوة المعالجة (GPU/TPU)">
+      <div class="q">13. أي من العناصر التالية يُعد المحرك الأساسي لثورة الذكاء الاصطناعي الحديثة؟</div>
+      <label class="opt"><input type="radio" name="q13" value="0"> أ) توافر البيانات الضخمة (Big Data) وقوة المعالجة (GPU/TPU)</label>
+      <label class="opt"><input type="radio" name="q13" value="1"> ب) الاعتماد على الأقراص المرنة المخزنة</label>
+      <label class="opt"><input type="radio" name="q13" value="2"> ج) تقليل عدد العمليات الحسابية داخل البرامج</label>
+      <label class="opt"><input type="radio" name="q13" value="3"> د) الاستغناء الكامل عن شبكة الإنترنت</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) قياس مدى دقة وكفاءة النموذج باستخدام بيانات لم يراها من قبل">
+      <div class="q">14. ما الهدف الرئيسي من مرحلة 'تقييم النموذج' (Model Evaluation)؟</div>
+      <label class="opt"><input type="radio" name="q14" value="0"> أ) قياس مدى دقة وكفاءة النموذج باستخدام بيانات لم يراها من قبل</label>
+      <label class="opt"><input type="radio" name="q14" value="1"> ب) مسح كافة البيانات المخزنة في النظام</label>
+      <label class="opt"><input type="radio" name="q14" value="2"> ج) زيادة حجم قاعدة بيانات التدريب</label>
+      <label class="opt"><input type="radio" name="q14" value="3"> د) تغيير لغة البرمجة المستخدمة في المشروع</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) خوارزمية الجيران الأقرب (K-Nearest Neighbors - KNN)">
+      <div class="q">15. أي خوارزمية تُستخدم في تصنيف البيانات بناءً على أقرب النقاط المجاورة لها؟</div>
+      <label class="opt"><input type="radio" name="q15" value="0"> أ) خوارزمية الجيران الأقرب (K-Nearest Neighbors - KNN)</label>
+      <label class="opt"><input type="radio" name="q15" value="1"> ب) خوارزمية الترتيب السريع (QuickSort)</label>
+      <label class="opt"><input type="radio" name="q15" value="2"> ج) شجرة البحث الثنائي (Binary Search Tree)</label>
+      <label class="opt"><input type="radio" name="q15" value="3"> د) بروتوكول شبكة الإنترنت (HTTP Protocol)</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) أداة لتقييم أداء نموذج التصنيف وتحديد الأخطاء الدقيقة">
+      <div class="q">16. ما هو دور 'مصفوفة الارتباك' (Confusion Matrix) في الذكاء الاصطناعي؟</div>
+      <label class="opt"><input type="radio" name="q16" value="0"> أ) أداة لتقييم أداء نموذج التصنيف وتحديد الأخطاء الدقيقة</label>
+      <label class="opt"><input type="radio" name="q16" value="1"> ب) مصفوفة لخزن الصور عالية الدقة</label>
+      <label class="opt"><input type="radio" name="q16" value="2"> ج) برمجية لتشفير الاتصالات في الشبكة</label>
+      <label class="opt"><input type="radio" name="q16" value="3"> د) طريقة حسابية لقياس سرعة المعالج</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) النظام الذي يستمر في التعلم وتعديل سلوكه بناءً على البيانات المستمرة">
+      <div class="q">17. ما هو الذكاء الاصطناعي التكيفي (Adaptive AI)؟</div>
+      <label class="opt"><input type="radio" name="q17" value="0"> أ) النظام الذي يستمر في التعلم وتعديل سلوكه بناءً على البيانات المستمرة</label>
+      <label class="opt"><input type="radio" name="q17" value="1"> ب) النظام الذي يتوقف عن العمل بعد التدريب الأول</label>
+      <label class="opt"><input type="radio" name="q17" value="2"> ج) النظام الذي لا يتطلب مصدر طاقة كهربائية</label>
+      <label class="opt"><input type="radio" name="q17" value="3"> د) برنامج ثوابت لا يتغير كوده إطلاقاً</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) Large Language Model">
+      <div class="q">18. ما الذي تعنيه اختصارات نماذج اللغة الكبيرة (LLM)؟</div>
+      <label class="opt"><input type="radio" name="q18" value="0"> أ) Large Language Model</label>
+      <label class="opt"><input type="radio" name="q18" value="1"> ب) Low Logic Machine</label>
+      <label class="opt"><input type="radio" name="q18" value="2"> ج) Long Linear Memory</label>
+      <label class="opt"><input type="radio" name="q18" value="3"> د) Local Language Matrix</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) التعلم من خلال التفاعل مع البيئة وتلقي المكافآت والعقوبات">
+      <div class="q">19. أي مما يلي يصف التعلم التعزيزي (Reinforcement Learning)؟</div>
+      <label class="opt"><input type="radio" name="q19" value="0"> أ) التعلم من خلال التفاعل مع البيئة وتلقي المكافآت والعقوبات</label>
+      <label class="opt"><input type="radio" name="q19" value="1"> ب) قراءة الكتب المطبوعة وتخزينها كملفات نصية</label>
+      <label class="opt"><input type="radio" name="q19" value="2"> ج) حفظ البيانات بدون إجراء أي تغيير</label>
+      <label class="opt"><input type="radio" name="q19" value="3"> د) تحويل النصوص إلى مقاطع صوتية بضغطة زر</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) تحجيم القيم لنطاق موحد لتسهيل وتسريع تدريب النموذج">
+      <div class="q">20. ما هي الفائدة الرئيسية لعملية تنعيم/موازنة البيانات (Data Normalization)؟</div>
+      <label class="opt"><input type="radio" name="q20" value="0"> أ) تحجيم القيم لنطاق موحد لتسهيل وتسريع تدريب النموذج</label>
+      <label class="opt"><input type="radio" name="q20" value="1"> ب) تغيير لغة البيانات إلى الإنجليزية تلقائياً</label>
+      <label class="opt"><input type="radio" name="q20" value="2"> ج) حذف جميع الأرقام من جدول البيانات</label>
+      <label class="opt"><input type="radio" name="q20" value="3"> د) حماية البيانات من الفيروسات والبرمجيات الخبيثة</label>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- تتابع بقية الاختيارات إلى 80 -->
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) المبادئ الأخلاقية الأساسية في الذكاء الاصطناعي">
+      <div class="q">21. الخصوصية وحماية بيانات المستخدمين تُعد من:</div>
+      <label class="opt"><input type="radio" name="q21" value="0"> أ) المبادئ الأخلاقية الأساسية في الذكاء الاصطناعي</label>
+      <label class="opt"><input type="radio" name="q21" value="1"> ب) المشكلات الهندسية للمعالج</label>
+      <label class="opt"><input type="radio" name="q21" value="2"> ج) متطلبات تشغيل بطاقة الرسوميات</label>
+      <label class="opt"><input type="radio" name="q21" value="3"> د) خصائص التشفير التماثل</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) انتحال شخصيات وتوليد محتوى مضلل وزائف">
+      <div class="q">22. تقنية التزييف العميق (Deepfake) تشكل خطورة أمنية عندما تستخدم في:</div>
+      <label class="opt"><input type="radio" name="q22" value="0"> أ) انتحال شخصيات وتوليد محتوى مضلل وزائف</label>
+      <label class="opt"><input type="radio" name="q22" value="1"> ب) تسريع ألعاب الفيديو</label>
+      <label class="opt"><input type="radio" name="q22" value="2"> ج) ضغط ملفات الفيديو الكبيرة</label>
+      <label class="opt"><input type="radio" name="q22" value="3"> د) تنشيط أنظمة التشغيل</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) إمكانية فهم وتفسير كيفية وصول النموذج لقرار معين (Explainable AI)">
+      <div class="q">23. الشفافية (Transparency) في الذكاء الاصطناعي تعني:</div>
+      <label class="opt"><input type="radio" name="q23" value="0"> أ) إمكانية فهم وتفسير كيفية وصول النموذج لقرار معين (Explainable AI)</label>
+      <label class="opt"><input type="radio" name="q23" value="1"> ب) شفافية شاشة العرض</label>
+      <label class="opt"><input type="radio" name="q23" value="2"> ج) سرعة تدفق البيانات عبر الألياف الضوئية</label>
+      <label class="opt"><input type="radio" name="q23" value="3"> د) عدم وجود كلمات مرسلة</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) استغلال الثغرات البشرية والخداع للحصول على معلومات">
+      <div class="q">24. هجمات الهندسة الاجتماعية تعتمد أساساً على:</div>
+      <label class="opt"><input type="radio" name="q24" value="0"> أ) استغلال الثغرات البشرية والخداع للحصول على معلومات</label>
+      <label class="opt"><input type="radio" name="q24" value="1"> ب) كسر كلمات المرور باستخدام الخوارزميات</label>
+      <label class="opt"><input type="radio" name="q24" value="2"> ج) إرسال فيروسات لتدمير الأقراص الصلبة</label>
+      <label class="opt"><input type="radio" name="q24" value="3"> د) قطع الاتصال بالإنترنت</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) التلاعب بالمخرجات أو إفساد بيانات التدريب">
+      <div class="q">25. البرمجيات الخبيثة (Malware) التي تستهدف نماذج الذكاء الاصطناعي تهدف لـ:</div>
+      <label class="opt"><input type="radio" name="q25" value="0"> أ) التلاعب بالمخرجات أو إفساد بيانات التدريب</label>
+      <label class="opt"><input type="radio" name="q25" value="1"> ب) زيادة سرعة عمل الخادم</label>
+      <label class="opt"><input type="radio" name="q25" value="2"> ج) تنظيف الذاكرة العشوائية</label>
+      <label class="opt"><input type="radio" name="q25" value="3"> د) ترقية نظام التشغيل</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) تحديد الجهة المسؤولة قانونياً وأخلاقياً عن أخطاء وقرارات النظام">
+      <div class="q">26. تُعرف 'المساءلة' (Accountability) في سياق الذكاء الاصطناعي بأنها:</div>
+      <label class="opt"><input type="radio" name="q26" value="0"> أ) تحديد الجهة المسؤولة قانونياً وأخلاقياً عن أخطاء وقرارات النظام</label>
+      <label class="opt"><input type="radio" name="q26" value="1"> ب) محاسبة الخادم على استهلاك الكهرباء</label>
+      <label class="opt"><input type="radio" name="q26" value="2"> ج) عدد العمليات المنفذة في الثانية</label>
+      <label class="opt"><input type="radio" name="q26" value="3"> د) حجم الملفات المعالجة</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) إدخال بيانات فاسدة أو مغلوطة أثناء التدريب لإفساد دقة النموذج">
+      <div class="q">27. هجمات 'تسميم البيانات' (Data Poisoning) تهدف إلى:</div>
+      <label class="opt"><input type="radio" name="q27" value="0"> أ) إدخال بيانات فاسدة أو مغلوطة أثناء التدريب لإفساد دقة النموذج</label>
+      <label class="opt"><input type="radio" name="q27" value="1"> ب) تسميم خوادم الإنترنت بفيروسات سريعة</label>
+      <label class="opt"><input type="radio" name="q27" value="2"> ج) تدمير كابلات الاتصالات البحرية</label>
+      <label class="opt"><input type="radio" name="q27" value="3"> د) تشفير الملفات الشخصية بطلب فدية</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) التشفير والتحقق من الطرف المقابل واكتشاف التلاعب">
+      <div class="q">28. اتصال ويب آمن (HTTPS) يعتمد على:</div>
+      <label class="opt"><input type="radio" name="q28" value="0"> أ) التشفير والتحقق من الطرف المقابل واكتشاف التلاعب</label>
+      <label class="opt"><input type="radio" name="q28" value="1"> ب) فتح جميع المنافذ للعملاء</label>
+      <label class="opt"><input type="radio" name="q28" value="2"> ج) إغلاق جدار الحماية نهائياً</label>
+      <label class="opt"><input type="radio" name="q28" value="3"> د) إلغاء كلمات المرور</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) لأنه سريع ومناسب لتشفير كميات ضخمة من بيانات الجلسة">
+      <div class="q">29. لماذا يستخدم التشفير المتماثل في جلسات الإنترنت؟</div>
+      <label class="opt"><input type="radio" name="q29" value="0"> أ) لأنه سريع ومناسب لتشفير كميات ضخمة من بيانات الجلسة</label>
+      <label class="opt"><input type="radio" name="q29" value="1"> ب) لأنه لا يحتاج مفاتيح نهائياً</label>
+      <label class="opt"><input type="radio" name="q29" value="2"> ج) لأنه يمنع تشغيل المتصفح</label>
+      <label class="opt"><input type="radio" name="q29" value="3"> د) لأنه يلغي الحاجة للشهادات الرقمية</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) كلمة مرور + رمز تحقق يصل إلى هاتفك المحمول">
+      <div class="q">30. أي مثال يُعد مصادقة متعددة العوامل (MFA)؟</div>
+      <label class="opt"><input type="radio" name="q30" value="0"> أ) كلمة مرور + رمز تحقق يصل إلى هاتفك المحمول</label>
+      <label class="opt"><input type="radio" name="q30" value="1"> ب) اسم المستخدم فقط</label>
+      <label class="opt"><input type="radio" name="q30" value="2"> ج) كلمة المرور وحدها</label>
+      <label class="opt"><input type="radio" name="q30" value="3"> د) السؤال السري الثابت</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) مراقبة والتحكم في حركة المرور الواردة والصادرة وفق قواعد الأمان">
+      <div class="q">31. ما الوظيفة الأساسية لجدار الحماية (Firewall)؟</div>
+      <label class="opt"><input type="radio" name="q31" value="0"> أ) مراقبة والتحكم في حركة المرور الواردة والصادرة وفق قواعد الأمان</label>
+      <label class="opt"><input type="radio" name="q31" value="1"> ب) تسريع سرعة التصفح</label>
+      <label class="opt"><input type="radio" name="q31" value="2"> ج) تصميم صفحات الويب</label>
+      <label class="opt"><input type="radio" name="q31" value="3"> د) تخزين النسخ الاحتياطية</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) فصل الخوادم المواجهة للإنترنت عن الشبكة الداخلية لحمايتها">
+      <div class="q">32. الغرض من استخدام شبكة DMZ في أمن الشبكات هو:</div>
+      <label class="opt"><input type="radio" name="q32" value="0"> أ) فصل الخوادم المواجهة للإنترنت عن الشبكة الداخلية لحمايتها</label>
+      <label class="opt"><input type="radio" name="q32" value="1"> ب) زيادة سرعة تحميل الملفات</label>
+      <label class="opt"><input type="radio" name="q32" value="2"> ج) السماح للجميع بدخول النظام بلا قيود</label>
+      <label class="opt"><input type="radio" name="q32" value="3"> د) الغاء الحاجة لكلمات المرور</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) استخدام طبقات متعددة ومختلفة من وسائل الحماية الأمنية">
+      <div class="q">33. مبدأ 'الدفاع في العمق' (Defense in Depth) يعني:</div>
+      <label class="opt"><input type="radio" name="q33" value="0"> أ) استخدام طبقات متعددة ومختلفة من وسائل الحماية الأمنية</label>
+      <label class="opt"><input type="radio" name="q33" value="1"> ب) الاعتماد على كلمة مرور قوية جداً فقط</label>
+      <label class="opt"><input type="radio" name="q33" value="2"> ج) وضع كافة الملفات في مجلد واحد مخفي</label>
+      <label class="opt"><input type="radio" name="q33" value="3"> د) إلغاء جدار الحماية والاعتماد على السيرفر</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) التحقق المستمر من الهوية والصلاحيات لجميع المستخدمين داخلياً وخارجياً">
+      <div class="q">34. مبدأ 'عدم الثقة مطلقاً' (Zero Trust) يعتمد على:</div>
+      <label class="opt"><input type="radio" name="q34" value="0"> أ) التحقق المستمر من الهوية والصلاحيات لجميع المستخدمين داخلياً وخارجياً</label>
+      <label class="opt"><input type="radio" name="q34" value="1"> ب) الوثوق التام بكل من يدخل شبكة الشركة الداخلية</label>
+      <label class="opt"><input type="radio" name="q34" value="2"> ج) إلغاء نظام الصلاحيات تماماً</label>
+      <label class="opt"><input type="radio" name="q34" value="3"> د) الاعتماد على عنوان IP فقط لتحديد الأمان</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) عرض المخرجات والنصوص على الشاشة">
+      <div class="q">35. ما هي الوظيفة الأساسية للدالة <code>print()</code> في لغة بايثون؟</div>
+      <label class="opt"><input type="radio" name="q35" value="0"> أ) عرض المخرجات والنصوص على الشاشة</label>
+      <label class="opt"><input type="radio" name="q35" value="1"> ب) استقبال مدخلات المستخدم</label>
+      <label class="opt"><input type="radio" name="q35" value="2"> ج) تخزين المتغيرات في القرص الصلب</label>
+      <label class="opt"><input type="radio" name="q35" value="3"> د) حساب العمليات الجذرية</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) Python AI">
+      <div class="q">36. ما ناتج تنفيذ الأمر: <code>print("Python" + " " + "AI")</code>؟</div>
+      <label class="opt"><input type="radio" name="q36" value="0"> أ) Python AI</label>
+      <label class="opt"><input type="radio" name="q36" value="1"> ب) PythonAI</label>
+      <label class="opt"><input type="radio" name="q36" value="2"> ج) Python+ +AI</label>
+      <label class="opt"><input type="radio" name="q36" value="3"> د) خطأ برمجي SyntaxError</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) 10 - 20 - 30">
+      <div class="q">37. ما ناتج تنفيذ الأمر: <code>print(10, 20, 30, sep=" - ")</code>؟</div>
+      <label class="opt"><input type="radio" name="q37" value="0"> أ) 10 - 20 - 30</label>
+      <label class="opt"><input type="radio" name="q37" value="1"> ب) 10 20 30</label>
+      <label class="opt"><input type="radio" name="q37" value="2"> ج) 10,20,30</label>
+      <label class="opt"><input type="radio" name="q37" value="3"> د) 10-20-30</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) 11">
+      <div class="q">38. ما ناتج تنفيذ العملية الحسابية: <code>print(2 ** 3 + 10 // 3)</code>؟</div>
+      <label class="opt"><input type="radio" name="q38" value="0"> أ) 11</label>
+      <label class="opt"><input type="radio" name="q38" value="1"> ب) 11.333</label>
+      <label class="opt"><input type="radio" name="q38" value="2"> ج) 9</label>
+      <label class="opt"><input type="radio" name="q38" value="3"> د) 14</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) &lt;class 'float'&gt;">
+      <div class="q">39. ما نوع البيانات (Data Type) لناتج العملية: <code>type(15 / 3)</code> في بايثون؟</div>
+      <label class="opt"><input type="radio" name="q39" value="0"> أ) &lt;class 'float'&gt;</label>
+      <label class="opt"><input type="radio" name="q39" value="1"> ب) &lt;class 'int'&gt;</label>
+      <label class="opt"><input type="radio" name="q39" value="2"> ج) &lt;class 'str'&gt;</label>
+      <label class="opt"><input type="radio" name="q39" value="3"> د) &lt;class 'bool'&gt;</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) *">
+      <div class="q">40. رمز الضرب الصحيح المستخدم في البرمجة بلغة بايثون هو:</div>
+      <label class="opt"><input type="radio" name="q40" value="0"> أ) *</label>
+      <label class="opt"><input type="radio" name="q40" value="1"> ب) x</label>
+      <label class="opt"><input type="radio" name="q40" value="2"> ج) ×</label>
+      <label class="opt"><input type="radio" name="q40" value="3"> د) #</label>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- أسئلة البرمجة كاختيارات إضافية -->
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) number = 0">
+      <div class="q">41. أي من الخيارات التالية يمثل طريقة صحيحة لإنشاء متغير باسم number وإسناد القيمة صفر له؟</div>
+      <label class="opt"><input type="radio" name="q41" value="0"> أ) number = 0</label>
+      <label class="opt"><input type="radio" name="q41" value="1"> ب) number =</label>
+      <label class="opt"><input type="radio" name="q41" value="2"> ج) number</label>
+      <label class="opt"><input type="radio" name="q41" value="3"> د) 0 = number</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) 1020">
+      <div class="q">42. ما ناتج تنفيذ الكود التالي: <code>a = "10"; b = "20"; print(a + b)</code>؟</div>
+      <label class="opt"><input type="radio" name="q42" value="0"> أ) 1020</label>
+      <label class="opt"><input type="radio" name="q42" value="1"> ب) 30</label>
+      <label class="opt"><input type="radio" name="q42" value="2"> ج) خطأ برمجي</label>
+      <label class="opt"><input type="radio" name="q42" value="3"> د) 10 20</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) print(&quot;Age: &quot; + 25)">
+      <div class="q">43. أي الأوامر البرمجية التالية يتسبب في حدوث خطأ من نوع TypeError في بايثون؟</div>
+      <label class="opt"><input type="radio" name="q43" value="0"> أ) print("Age: " + 25)</label>
+      <label class="opt"><input type="radio" name="q43" value="1"> ب) print("Age: " + str(25))</label>
+      <label class="opt"><input type="radio" name="q43" value="2"> ج) print(25 + 25)</label>
+      <label class="opt"><input type="radio" name="q43" value="3"> د) print("Hello" * 3)</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) %">
+      <div class="q">44. لطباعة باقي القسمة الصحيحة للعدد 10 على العدد 3 في بايثون، نستخدم المعامل:</div>
+      <label class="opt"><input type="radio" name="q44" value="0"> أ) %</label>
+      <label class="opt"><input type="radio" name="q44" value="1"> ب) /</label>
+      <label class="opt"><input type="radio" name="q44" value="2"> ج) //</label>
+      <label class="opt"><input type="radio" name="q44" value="3"> د) *</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) //">
+      <div class="q">45. لأخذ القسمة الصحيحة (بدون كسور) للعدد 10 على 3، نستخدم المعامل:</div>
+      <label class="opt"><input type="radio" name="q45" value="0"> أ) //</label>
+      <label class="opt"><input type="radio" name="q45" value="1"> ب) /</label>
+      <label class="opt"><input type="radio" name="q45" value="2"> ج) %</label>
+      <label class="opt"><input type="radio" name="q45" value="3"> د) **</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) **">
+      <div class="q">46. لتنفيذ عملية الأس (الرفع للقوة) في بايثون، نستخدم الرمز:</div>
+      <label class="opt"><input type="radio" name="q46" value="0"> أ) **</label>
+      <label class="opt"><input type="radio" name="q46" value="1"> ب) ^</label>
+      <label class="opt"><input type="radio" name="q46" value="2"> ج) *</label>
+      <label class="opt"><input type="radio" name="q46" value="3"> د) %%</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) student_score">
+      <div class="q">47. أي من الأسماء التالية يُعد اسماً صحيحاً وغير مخالف لقواعد تسمية المتغيرات في بايثون؟</div>
+      <label class="opt"><input type="radio" name="q47" value="0"> أ) student_score</label>
+      <label class="opt"><input type="radio" name="q47" value="1"> ب) 2nd_student</label>
+      <label class="opt"><input type="radio" name="q47" value="2"> ج) class</label>
+      <label class="opt"><input type="radio" name="q47" value="3"> د) my-name</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) if">
+      <div class="q">48. الكلمة المفتاحية المستخدمة لفحص شرط معين في لغة بايثون هي:</div>
+      <label class="opt"><input type="radio" name="q48" value="0"> أ) if</label>
+      <label class="opt"><input type="radio" name="q48" value="1"> ب) check</label>
+      <label class="opt"><input type="radio" name="q48" value="2"> ج) when</label>
+      <label class="opt"><input type="radio" name="q48" value="3"> د) condition</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) : (النقطتان الرأسيتان)">
+      <div class="q">49. عند كتابة جملة شرطية if في بايثون، ما الرمز الذي يجب وضعه في نهاية سطر الشرط؟</div>
+      <label class="opt"><input type="radio" name="q49" value="0"> أ) : (النقطتان الرأسيتان)</label>
+      <label class="opt"><input type="radio" name="q49" value="1"> ب) ; (فاصلة منقوطة)</label>
+      <label class="opt"><input type="radio" name="q49" value="2"> ج) . (نقطة)</label>
+      <label class="opt"><input type="radio" name="q49" value="3"> د) , (فاصلة)</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) x &gt;= 50">
+      <div class="q">50. ما التعبير الشرطي الصحيح لفحص ما إذا كان المتغير x أكبر من أو يساوي 50؟</div>
+      <label class="opt"><input type="radio" name="q50" value="0"> أ) x &gt;= 50</label>
+      <label class="opt"><input type="radio" name="q50" value="1"> ب) x =&gt; 50</label>
+      <label class="opt"><input type="radio" name="q50" value="2"> ج) 50 =&lt; x</label>
+      <label class="opt"><input type="radio" name="q50" value="3"> د) x &gt; 50</label>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- أسئلة من 51 إلى 80 -->
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) !=">
+      <div class="q">51. ما الرمز المستخدم للتعبير عن 'لا يساوي' في المعاملات الشرطية بلغة بايثون؟</div>
+      <label class="opt"><input type="radio" name="q51" value="0"> أ) !=</label>
+      <label class="opt"><input type="radio" name="q51" value="1"> ب) &lt;&gt;</label>
+      <label class="opt"><input type="radio" name="q51" value="2"> ج) ==!</label>
+      <label class="opt"><input type="radio" name="q51" value="3"> د) not=</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) ==">
+      <div class="q">52. ما الرمز المستخدم لفحص التساوي بين قيمتين في جملة شرطية بايثون؟</div>
+      <label class="opt"><input type="radio" name="q52" value="0"> أ) ==</label>
+      <label class="opt"><input type="radio" name="q52" value="1"> ب) =</label>
+      <label class="opt"><input type="radio" name="q52" value="2"> ج) ===</label>
+      <label class="opt"><input type="radio" name="q52" value="3"> د) is equal</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) elif">
+      <div class="q">53. في جمل الشرط المتعددة، تُستخدم الكلمة المفتاحية لفحص شرط بديل إذا لم يتحقق الشرط الأول:</div>
+      <label class="opt"><input type="radio" name="q53" value="0"> أ) elif</label>
+      <label class="opt"><input type="radio" name="q53" value="1"> ب) else if</label>
+      <label class="opt"><input type="radio" name="q53" value="2"> ج) then</label>
+      <label class="opt"><input type="radio" name="q53" value="3"> د) case</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) else">
+      <div class="q">54. الكلمة المفتاحية التي تستخدم لتنفيذ كود معين عندما تنفد جميع الشروط السابقة ولا يتحقق أي منها هي:</div>
+      <label class="opt"><input type="radio" name="q54" value="0"> أ) else</label>
+      <label class="opt"><input type="radio" name="q54" value="1"> ب) other</label>
+      <label class="opt"><input type="radio" name="q54" value="2"> ج) default</label>
+      <label class="opt"><input type="radio" name="q54" value="3"> د) otherwise</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) True">
+      <div class="q">55. ما ناتج التعبير المنطقي التالي: <code>print(10 &gt; 5 and 3 &lt; 8)</code>؟</div>
+      <label class="opt"><input type="radio" name="q55" value="0"> أ) True</label>
+      <label class="opt"><input type="radio" name="q55" value="1"> ب) False</label>
+      <label class="opt"><input type="radio" name="q55" value="2"> ج) Error</label>
+      <label class="opt"><input type="radio" name="q55" value="3"> د) None</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) True">
+      <div class="q">56. ما ناتج التعبير المنطقي التالي: <code>print(5 &gt; 10 or 3 &lt; 8)</code>؟</div>
+      <label class="opt"><input type="radio" name="q56" value="0"> أ) True</label>
+      <label class="opt"><input type="radio" name="q56" value="1"> ب) False</label>
+      <label class="opt"><input type="radio" name="q56" value="2"> ج) None</label>
+      <label class="opt"><input type="radio" name="q56" value="3"> د) Error</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) False">
+      <div class="q">57. ما ناتج التعبير المنطقي التالي: <code>print(not(5 &gt; 2))</code>؟</div>
+      <label class="opt"><input type="radio" name="q57" value="0"> أ) False</label>
+      <label class="opt"><input type="radio" name="q57" value="1"> ب) True</label>
+      <label class="opt"><input type="radio" name="q57" value="2"> ج) None</label>
+      <label class="opt"><input type="radio" name="q57" value="3"> د) Error</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) int()">
+      <div class="q">58. أي من الدوال التالية تحول القيمة النصية المدخلة من المستخدم إلى عدد صحيح (Integer)؟</div>
+      <label class="opt"><input type="radio" name="q58" value="0"> أ) int()</label>
+      <label class="opt"><input type="radio" name="q58" value="1"> ب) str()</label>
+      <label class="opt"><input type="radio" name="q58" value="2"> ج) float()</label>
+      <label class="opt"><input type="radio" name="q58" value="3"> د) bool()</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) &lt;class 'str'&gt;">
+      <div class="q">59. دالة input() في لغة بايثون تُرجع دائماً قيمة من نوع:</div>
+      <label class="opt"><input type="radio" name="q59" value="0"> أ) &lt;class 'str'&gt;</label>
+      <label class="opt"><input type="radio" name="q59" value="1"> ب) &lt;class 'int'&gt;</label>
+      <label class="opt"><input type="radio" name="q59" value="2"> ج) &lt;class 'float'&gt;</label>
+      <label class="opt"><input type="radio" name="q59" value="3"> د) &lt;class 'list'&gt;</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) تحسب عدد الحروف والعلامات داخل السلسلة النصية">
+      <div class="q">60. ماذا تفعل الدالة len() عند تطبيقها على سلسلة نصية؟</div>
+      <label class="opt"><input type="radio" name="q60" value="0"> أ) تحسب عدد الحروف والعلامات داخل السلسلة النصية</label>
+      <label class="opt"><input type="radio" name="q60" value="1"> ب) تحول النص إلى أرقام</label>
+      <label class="opt"><input type="radio" name="q60" value="2"> ج) تحذف الفراغات من النص</label>
+      <label class="opt"><input type="radio" name="q60" value="3"> د) تطبع النص بالمقلوب</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) &lt;class 'bool'&gt;">
+      <div class="q">61. ما هو ناتج تنفيذ الأمر: <code>print(type(True))</code>؟</div>
+      <label class="opt"><input type="radio" name="q61" value="0"> أ) &lt;class 'bool'&gt;</label>
+      <label class="opt"><input type="radio" name="q61" value="1"> ب) &lt;class 'int'&gt;</label>
+      <label class="opt"><input type="radio" name="q61" value="2"> ج) &lt;class 'str'&gt;</label>
+      <label class="opt"><input type="radio" name="q61" value="3"> د) &lt;class 'float'&gt;</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) الأقراص () أولاً ثم الأسس ثم الضرب والقسمة ثم الجمع والطرح">
+      <div class="q">62. ترتيب أولويات العمليات الحسابية في بايثون يبدأ بـ:</div>
+      <label class="opt"><input type="radio" name="q62" value="0"> أ) الأقواس () أولاً ثم الأسس ثم الضرب والقسمة ثم الجمع والطرح</label>
+      <label class="opt"><input type="radio" name="q62" value="1"> ب) الجمع والطرح أولاً ثم الضرب والقسمة</label>
+      <label class="opt"><input type="radio" name="q62" value="2"> ج) من اليسار لليمين بغض النظر عن العمليات</label>
+      <label class="opt"><input type="radio" name="q62" value="3"> د) الأسس ثم الأقواس ثم الجمع</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) AAA">
+      <div class="q">63. ما ناتج تنفيذ التعبير: <code>print(3 * 'A')</code>؟</div>
+      <label class="opt"><input type="radio" name="q63" value="0"> أ) AAA</label>
+      <label class="opt"><input type="radio" name="q63" value="1"> ب) 3A</label>
+      <label class="opt"><input type="radio" name="q63" value="2"> ج) A3</label>
+      <label class="opt"><input type="radio" name="q63" value="3"> د) خطأ برمجي</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) # هذا تعليق برمجي">
+      <div class="q">64. أي مما يلي يمثل تعليقاً (Comment) صحيحاً في لغة بايثون؟</div>
+      <label class="opt"><input type="radio" name="q64" value="0"> أ) # هذا تعليق برمجي</label>
+      <label class="opt"><input type="radio" name="q64" value="1"> ب) // هذا تعليق برمجي</label>
+      <label class="opt"><input type="radio" name="q64" value="2"> ج) /* هذا تعليق برمجي */</label>
+      <label class="opt"><input type="radio" name="q64" value="3"> د) &lt;!-- هذا تعليق --&gt;</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) float">
+      <div class="q">65. عند تخزين عدد عشري مثل 98.5 في متغير، يكون نوع البيانات تلقائياً:</div>
+      <label class="opt"><input type="radio" name="q65" value="0"> أ) float</label>
+      <label class="opt"><input type="radio" name="q65" value="1"> ب) int</label>
+      <label class="opt"><input type="radio" name="q65" value="2"> ج) str</label>
+      <label class="opt"><input type="radio" name="q65" value="3"> د) char</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) 8">
+      <div class="q">66. ما ناتج تنفيذ الكود: <code>x = 5; x += 3; print(x)</code>؟</div>
+      <label class="opt"><input type="radio" name="q66" value="0"> أ) 8</label>
+      <label class="opt"><input type="radio" name="q66" value="1"> ب) 53</label>
+      <label class="opt"><input type="radio" name="q66" value="2"> ج) 3</label>
+      <label class="opt"><input type="radio" name="q66" value="3"> د) 5</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) ==">
+      <div class="q">67. أي من المعاملات التالية يُستخدم للتحقق من التساوي في القيمة والنوع معاً في بايثون؟</div>
+      <label class="opt"><input type="radio" name="q67" value="0"> أ) ==</label>
+      <label class="opt"><input type="radio" name="q67" value="1"> ب) =</label>
+      <label class="opt"><input type="radio" name="q67" value="2"> ج) :=</label>
+      <label class="opt"><input type="radio" name="q67" value="3"> د) &lt;=&gt;</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) تحديد الكتل البرمجية التابعة للجمل الشرطية أو الدوال بدلاً من الأقواس">
+      <div class="q">68. ما الغرض الرئيسي من استخدام الهامش (Indentation) في لغة بايثون؟</div>
+      <label class="opt"><input type="radio" name="q68" value="0"> أ) تحديد الكتل البرمجية التابعة للجمل الشرطية أو الدوال بدلاً من الأقواس</label>
+      <label class="opt"><input type="radio" name="q68" value="1"> ب) زيادة سرعة تشغيل الكود فقط</label>
+      <label class="opt"><input type="radio" name="q68" value="2"> ج) تجميل شكل الشاشة للمبرمج</label>
+      <label class="opt"><input type="radio" name="q68" value="3"> د) منع حدوث أخطاء الذاكرة</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) False">
+      <div class="q">69. ما ناتج الكود التالي: <code>print(bool(0))</code>؟</div>
+      <label class="opt"><input type="radio" name="q69" value="0"> أ) False</label>
+      <label class="opt"><input type="radio" name="q69" value="1"> ب) True</label>
+      <label class="opt"><input type="radio" name="q69" value="2"> ج) 0</label>
+      <label class="opt"><input type="radio" name="q69" value="3"> د) Error</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) math">
+      <div class="q">70. أي من الوحدات أو المكتبات التالية تستخدم غالباً للتعامل مع العمليات الرياضية المتقدمة في بايثون؟</div>
+      <label class="opt"><input type="radio" name="q70" value="0"> أ) math</label>
+      <label class="opt"><input type="radio" name="q70" value="1"> ب) print</label>
+      <label class="opt"><input type="radio" name="q70" value="2"> ج) string</label>
+      <label class="opt"><input type="radio" name="q70" value="3"> د) sys</label>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- 10 أسئلة اختيار إضافية تكميلية للوصول لـ 80 اختيار -->
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) print(&quot;Hello&quot;)">
+      <div class="q">71. اختر البرنامج الصحيح لطباعة 'Hello' في وحدة التحكم:</div>
+      <label class="opt"><input type="radio" name="q71" value="0"> أ) print("Hello")</label>
+      <label class="opt"><input type="radio" name="q71" value="1"> ب) print("Hello"</label>
+      <label class="opt"><input type="radio" name="q71" value="2"> ج) print.print("Hello")</label>
+      <label class="opt"><input type="radio" name="q71" value="3"> د) print(Hello)</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) num = 5 ثم print(num)">
+      <div class="q">72. لتنفيذ برنامج يسند 5 لـ num ويطبعه، أي كود يمثل الصياغة الصحيحة الكاملة؟</div>
+      <label class="opt"><input type="radio" name="q72" value="0"> أ) num = 5 ثم print(num)</label>
+      <label class="opt"><input type="radio" name="q72" value="1"> ب) 5 = num ثم print(5)</label>
+      <label class="opt"><input type="radio" name="q72" value="2"> ج) num := 5 ثم echo num</label>
+      <label class="opt"><input type="radio" name="q72" value="3"> د) print(num = 5)</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) books == 100">
+      <div class="q">73. للتحقق من أن المتغير books يساوي 100 داخل جملة if نكتب الشرط:</div>
+      <label class="opt"><input type="radio" name="q73" value="0"> أ) books == 100</label>
+      <label class="opt"><input type="radio" name="q73" value="1"> ب) books = 100</label>
+      <label class="opt"><input type="radio" name="q73" value="2"> ج) 100 := books</label>
+      <label class="opt"><input type="radio" name="q73" value="3"> د) books equals 100</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) age &lt;= 16">
+      <div class="q">74. التعبير البرمجي الذي يفحص 'العمر أقل من أو يساوي 16' هو:</div>
+      <label class="opt"><input type="radio" name="q74" value="0"> أ) age &lt;= 16</label>
+      <label class="opt"><input type="radio" name="q74" value="1"> ب) age =&lt; 16</label>
+      <label class="opt"><input type="radio" name="q74" value="2"> ج) age &lt; 16 =</label>
+      <label class="opt"><input type="radio" name="q74" value="3"> د) 16 &gt;= age</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) elif english &gt;= 75:">
+      <div class="q">75. لفحص شرط فرعي إضافي ينص على أن الدرجة أكبر من أو تساوي 75 نكتب:</div>
+      <label class="opt"><input type="radio" name="q75" value="0"> أ) elif english &gt;= 75:</label>
+      <label class="opt"><input type="radio" name="q75" value="1"> ب) else if english =&gt; 75:</label>
+      <label class="opt"><input type="radio" name="q75" value="2"> ج) if else english &gt; 75</label>
+      <label class="opt"><input type="radio" name="q75" value="3"> د) case english &gt;= 75:</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) ZeroDivisionError">
+      <div class="q">76. في بايثون عند محاولة القسمة على الصفر 10 / 0 يظهر خطأ نوعه:</div>
+      <label class="opt"><input type="radio" name="q76" value="0"> أ) ZeroDivisionError</label>
+      <label class="opt"><input type="radio" name="q76" value="1"> ب) ValueError</label>
+      <label class="opt"><input type="radio" name="q76" value="2"> ج) TypeError</label>
+      <label class="opt"><input type="radio" name="q76" value="3"> د) SyntaxError</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) 15">
+      <div class="q">77. ما ناتج الكود التالي: <code>x = 10; y = 5; print(x + y)</code>؟</div>
+      <label class="opt"><input type="radio" name="q77" value="0"> أ) 15</label>
+      <label class="opt"><input type="radio" name="q77" value="1"> ب) 105</label>
+      <label class="opt"><input type="radio" name="q77" value="2"> ج) xy</label>
+      <label class="opt"><input type="radio" name="q77" value="3"> د) error</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) True">
+      <div class="q">78. نتيجة مقارنة النصوص الترتيبية: <code>print("apple" &lt; "banana")</code> هي:</div>
+      <label class="opt"><input type="radio" name="q78" value="0"> أ) True</label>
+      <label class="opt"><input type="radio" name="q78" value="1"> ب) False</label>
+      <label class="opt"><input type="radio" name="q78" value="2"> ج) None</label>
+      <label class="opt"><input type="radio" name="q78" value="3"> د) Error</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) NameError">
+      <div class="q">79. عند محاولة استخدام متغير غير معرف مسبقاً في الكود يظهر خطأ:</div>
+      <label class="opt"><input type="radio" name="q79" value="0"> أ) NameError</label>
+      <label class="opt"><input type="radio" name="q79" value="1"> ب) KeyError</label>
+      <label class="opt"><input type="radio" name="q79" value="2"> ج) IndexError</label>
+      <label class="opt"><input type="radio" name="q79" value="3"> د) TypeError</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="mcq" data-points="1" data-answer="0" data-correct-text="أ) إرسال المخرجات لسلسلة جديدة (End Line)">
+      <div class="q">80. في أمر الطباعة المعامل <code>end="\n"</code> وظيفته الرئيسية هي:</div>
+      <label class="opt"><input type="radio" name="q80" value="0"> أ) إنشاء سطر جديد تلقائياً بعد إنهاء الطباعة</label>
+      <label class="opt"><input type="radio" name="q80" value="1"> ب) إنهاء تشغيل البرنامج تماماً</label>
+      <label class="opt"><input type="radio" name="q80" value="2"> ج) مسح الشاشة</label>
+      <label class="opt"><input type="radio" name="q80" value="3"> د) حذف الحرف الاخير من الطباعة</label>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- القسم الثاني: الأسئلة المقالية والمقارنات -->
+    <div class="section">القسم الثاني: الأسئلة المقالية والمقارنات (20 سؤالاً)</div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="التعلم الموجه يعتمد على بيانات معنونة تشتمل على الإجابة الصحيحة للتدريب، بينما التعلم غير الموجه يعمل على بيانات غير معنونة لاستخراج الأنماط والتجميع.">
+      <div class="q">81. [مقارنة] قارن بين التعلم الموجه (Supervised) والتعلم غير الموجه (Unsupervised) من حيث طبيعة البيانات المستخدمة.</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="الواقع المعزز (AR) يضيف عناصر رقمية تفاعلية للعالم الحقيقي، بينما الواقع الافتراضي (VR) يغمر المستخدم بالكامل في بيئة افتراضية معزولة عن الواقع.">
+      <div class="q">82. [مقارنة] ما الفرق الجوهري في التجربة المستخدمة بين الواقع المعزز (AR) والواقع الافتراضي (VR)؟</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="التشفير المتماثل يستخدم مفتاحاً واحداً سرياً للتشفير وفك التشفير، بينما التشفير غير المتماثل يستخدم زوجاً من المفاتيح (مفتاح عام للتشفير ومفتاح خاص لفك التشفير).">
+      <div class="q">83. [مقارنة] قارن بين التشفير المتماثل والتشفير غير المتماثل من حيث عدد ونوع المفاتيح المستخدمة.</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="يحدث التحيز عند تدريب النموذج على بيانات تاريخية غير عادلة أو غير ممثلة بشكل متكافئ، مما يجعله يصدر قرارات مجحفة تجاه فئة معينة.">
+      <div class="q">84. [مقالي] اشرح بأسلوبك مفهوم 'التحيز الخوارزمي' (Algorithmic Bias) وكيف يحدث في نماذج الذكاء الاصطناعي؟</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="الهلوسة تعني إنتاج معلومات غير صحيحة أو زائفة ولكنها معروضة بثقة وصياغة لغوية مقنعة جداً، مما قد يضلل المستخدمين في مجالات حساسة.">
+      <div class="q">85. [مقالي] ما المقصود بـ 'هلوسة الذكاء الاصطناعي' (AI Hallucination) ولماذا تشكل خطورة في التطبيقات العملية؟</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="جدار الحماية يراقب ويتحكم في مرور البيانات وفق قواعد أمان، بينما منطقة DMZ هي شبكة معزولة تضع الخوادم الخارجية لحماية الشبكة الداخلية في حال الاختراق.">
+      <div class="q">86. [مقارنة] ما الفرق الوظيفي بين جدار الحماية (Firewall) ومنطقة (DMZ) في تأمين شبكات المؤسسات؟</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="تنظيف البيانات يزيل القيم المفقودة والأخطاء والمتكررات؛ لأن جودة النموذج تعتمد كلياً على جودة البيانات المدخلة لتجنب النتائج المغلوطة.">
+      <div class="q">87. [مقالي] وضح أهمية مرحلة 'تنظيف البيانات' (Data Cleaning) في بداية أي مشروع ذكاء اصطناعي.</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="هو استخدام طبقات متعددة ومختلفة من وسائل الحماية (تشفير، جدار حماية، مصادقة ثنائية) بحيث إذا اخترقت طبقة تظل باقي الطبقات تحمي النظام.">
+      <div class="q">88. [مقالي] اشرح مبدأ الأمن السيبراني المعروف بـ 'الدفاع في العمق' (Defense in Depth).</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="الرمز '=' هو معامل إسناد لتخزين قيمة داخل متغير، بينما '==' هو معامل مقارنة شرطي يفحص التساوي بين قيمتين ويُرجع True أو False.">
+      <div class="q">89. [مقارنة] ما الفرق البرمجي والدلالي بين استخدام الرمز `=` والرمز `==` في لغة بايثون؟</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="الحوسبة الطرفية هي معالجة البيانات محلياً على الجهاز بدلاً من إرسالها للسحابة، وهي ضرورية للسيارات الذاتية لاتخاذ قرارات سريعة وتفادي الحوادث بدون تأخير.">
+      <div class="q">90. [مقالي] وضح مفهوم 'الحوسبة الطرفية' (Edge Computing) ولماذا أصبحت ضرورية في السيارات ذاتية القيادة؟</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="تُستخدم elif لفحص شروط بديلة إضافية في منتصف الكود عندما يكون هناك أكثر من احتمالين، بعكس else التي تتنفذ فقط بعد فشل كل الشروط.">
+      <div class="q">91. [مقالي] متى نستخدم الكلمة المفتاحية `elif` بدلاً من استخدام `if` متكررة أو `else` المباشرة؟</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="الهامش (Indentation) يحدد الكتل البرمجية التابعة للشرط في بايثون بدلاً من الأقواس المستخدمة في اللغات الأخرى، وبدونه يحدث IndentationError.">
+      <div class="q">92. [مقالي] ما أهمية المسافات البادئة (Indentation) في كتابة الجمل الشرطية بلغة بايثون؟</div>
+      <label class="q"></label>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="دالة input() تقرأ المدخلات دائماً كـ نص String، ولإجراء حسابات رقمية يجب تحويلها باستخدام int() أو float().">
+      <div class="q">93. [مقالي] لماذا يجب تحويل مخرجات الدالة `input()` باستخدام `int()` أو `float()` عند التعامل مع الأرقام؟</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="المساءلة تعني وجود جهة أو شخص يتحمل التبعة القانونية والأخلاقية عند صدور قرارات خاطئة من نظام الذكاء الاصطناعي.">
+      <div class="q">94. [مقالي] وضح مفهوم 'المساءلة' (Accountability) في أنظمة الذكاء الاصطناعي ولماذا تعتبر مطلباً أخلاقياً؟</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="تساعد في التمييز بين الصور والأشياء وتحديد الأنماط البصرية واستخدامها في السيارات الذاتية والمجالات الطبية.">
+      <div class="q">95. [مقالي] اذكر فائدتين رئيسيتين لتقنية 'رؤية الكمبيوتر' (Computer Vision) في حياتنا اليومية.</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="معامل and يتطلب تحقق جميع الشروط ليعطي True، بينما معامل or يكفي تحقق شرط واحد على الأقل ليعطي True.">
+      <div class="q">96. [مقارنة] قارن بين المعامل المنطقي `and` والمعامل المنطقي `or` في لغة بايثون.</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="طريقة تستهدف خداع العنصر البشري للحصول على بيانات سرية، وتتميز بأنها تستغل الثغرات البشرية بدلاً من الثغرات التقنية.">
+      <div class="q">97. [مقالي] اشرح كيف تعمل هجمات 'الهندسة الاجتماعية' (Social Engineering) وما الذي يجعلها خطيرة؟</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="الأعداد الصحيحة int هي أعداد بدون كسور، بينما الأعداد العشرية float تشتمل على علامة عشرية وتُستخدم للقياسات والكسور.">
+      <div class="q">98. [مقارنة] ما الفرق بين نوع البيانات الصحيح (int) ونوع البيانات العشري (float) في بايثون؟</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="المصادقة هي التحقق من هوية المستخدم (مثل الاسم وكلمة المرور)، بينما الصلاحيات هي تحديد ما يُسمح للمستخدم بفعله داخل النظام.">
+      <div class="q">99. [مقارنة] قارن بين مفهوم 'المصادقة' (Authentication) ومفهوم 'الصلاحيات' (Authorization) في الأمن السيبراني.</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="card" data-type="essay" data-points="1" data-model="نموذج لغوي كبير مدرب على كميات ضخمة من النصوص لفهم اللغة البشرية وتوليد نصوص وإجابات ذكية.">
+      <div class="q">100. [مقالي] وضح اختصار (LLM) وما الوظيفة الأساسية التي يقوم بها في الذكاء الاصطناعي التوليدي؟</div>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+      <div class="feedback"></div>
+    </div>
+
+    <button type="button" class="submit" id="submitBtn">تسليم الامتحان وتصحيح الإجابات 🚀</button>
+  </form>
+
+  <div id="result" class="result hidden">
+    <div class="score" id="score"></div>
+    <div id="pct" style="font-size:22px; font-weight:bold; margin:10px 0;"></div>
+    <p id="status" style="font-size:16px;"></p>
+    <p style="color:#555; font-size:14px;">تم تمييز جميع الأسئلة باللون الأخضر للإجابات الصحيحة والأحمر للإجابات الخاطئة مع إظهار النتيجة والإجابات النموذجية.</p>
+  </div>
+</main>
+
+<script>
+  let remaining = 60 * 60; // 60 minutes
+  let submitted = false;
+  const timerEl = document.getElementById('timer');
+
+  function tick() {
+    if (submitted) return;
+    const m = Math.floor(remaining / 60);
+    const s = remaining % 60;
+    timerEl.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    if (remaining <= 0) {
+      submitExam(true);
+      return;
+    }
+    remaining--;
+  }
+  const timerInterval = setInterval(tick, 1000);
+  tick();
+
+  function submitExam(auto = false) {
+    if (submitted) return;
+
+    const nameInput = document.getElementById('studentName');
+    if (!auto && (!nameInput.value || nameInput.value.trim() === '')) {
+      alert('يرجى كتابة اسم الطالب قبل تسليم الامتحان!');
+      nameInput.focus();
+      return;
+    }
+
+    submitted = true;
+    clearInterval(timerInterval);
+
+    let score = 0;
+    let total = 0;
+
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('correct', 'wrong'));
+
+    // MCQ Correction
+    document.querySelectorAll('[data-type="mcq"]').forEach(q => {
+      const pts = Number(q.dataset.points);
+      total += pts;
+      const ans = Number(q.dataset.answer);
+      const sel = q.querySelector('input:checked');
+      const ok = sel && Number(sel.value) === ans;
+      if (ok) score += pts;
+      q.classList.add(ok ? 'correct' : 'wrong');
+      const fb = q.querySelector('.feedback');
+      fb.className = 'feedback ' + (ok ? 'ok' : 'err');
+      fb.innerHTML = ok ? '✓ إجابة صحيحة' : `✗ الإجابة الصحيحة هي: ${q.dataset.correctText}`;
+    });
+
+    // Essay Guidance / Evaluation
+    document.querySelectorAll('[data-type="essay"]').forEach(q => {
+      const pts = Number(q.dataset.points);
+      total += pts;
+      const val = q.querySelector('textarea').value.trim();
+      const hasAnswer = val.length > 5;
+      if (hasAnswer) score += pts; // احتساب الدرجة مبدئياً إذا أوجز الطالب إجابة
+      q.classList.add(hasAnswer ? 'correct' : 'wrong');
+      const fb = q.querySelector('.feedback');
+      fb.className = 'feedback ' + (hasAnswer ? 'ok' : 'err');
+      fb.innerHTML = `📌 الإجابة النموذجية الاسترشادية:\n${q.dataset.model}`;
+    });
+
+    const pct = Math.round((score / total) * 100);
+    const resDiv = document.getElementById('result');
+    resDiv.classList.remove('hidden');
+    document.getElementById('score').textContent = `${score} / ${total}`;
+    document.getElementById('pct').textContent = `النسبة المئوية: ${pct}%`;
+    document.getElementById('status').textContent = auto ? 'انتهى الوقت المحدد (60 دقيقة) وتم تسليم الامتحان تلقائياً.' : 'تم تسليم الامتحان بنجاح.';
+
+    window.scrollTo({ top: resDiv.offsetTop - 20, behavior: 'smooth' });
+    document.getElementById('submitBtn').disabled = true;
+    document.querySelectorAll('input, select, textarea').forEach(x => x.disabled = true);
+  }
+
+  document.getElementById('submitBtn').addEventListener('click', () => submitExam(false));
+</script>
+</body>
+</html>
